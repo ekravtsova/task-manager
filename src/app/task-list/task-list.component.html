@@ -1,0 +1,41 @@
+<ng-container [formGroup]="todayTasksForm">
+  <div class="header">
+    <p class="header-title">Ongoing tasks</p>
+    <!-- <div>Count: {{ongoingTasks.length}}</div> -->
+  </div>
+
+  <tui-tiles formArrayName="ongoingTasks"
+             class="tiles"
+             [(order)]="ongoingOrder">
+    <tui-tile
+              *ngFor="let item of ongoingTasks.controls; let index = index"
+              tuiTileHandle
+              class="tile"
+              [style.order]="ongoingOrder.get(index)">
+      <div class="content" [formGroup]="item" >
+        <input type="checkbox" formControlName="isDone" (click)="moveToDone(index)"/>
+        <input formControlName="title" />
+      </div>
+    </tui-tile>
+  </tui-tiles>
+
+  <div class="header">
+    <p class="header-title">Done tasks</p>
+    <!-- <div>Count: {{doneTasks.length}}</div> -->
+  </div>
+
+  <tui-tiles
+             class="tiles"
+             [(order)]="doneOrder">
+    <tui-tile
+              *ngFor="let item of doneTasks.controls let index = index"
+              tuiTileHandle
+              class="tile done"
+              [style.order]="doneOrder.get(index)">
+      <div class="content" [formGroup]="item">
+        <input type="checkbox" formControlName="isDone" (click)="moveToOngoing(index)"/>
+        <input formControlName="title" />
+      </div>
+    </tui-tile>
+  </tui-tiles>
+</ng-container>
